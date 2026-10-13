@@ -1,0 +1,380 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\chaitanya pingale> mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use ass2;
+Database changed
+mysql> select * from department;
++--------+----------------+
+| DeptID | departmentname |
++--------+----------------+
+|     10 | IT             |
+|     20 | HR             |
+|     30 | Sales          |
+|     40 | Finance        |
+|     50 | Marketing      |
++--------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select
+    -> *  from employee;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Employee VALUES
+    -> (101, 'Amit', 60000, 10, '2023-01-15', 'Mumbai'),
+    -> (102, 'Sneha', 75000, 20, '2022-05-20', 'Pune'),
+    -> (103, 'Rahul', 50000, 10, '2024-02-10', 'Mumbai'),
+    -> (104, 'Priya', 90000, 30, '2021-08-12', 'Mumbai'),
+    -> (105, 'Karan', 80000, 30, '2023-11-05', 'Nashik'),
+    -> (106, 'Neha', 45000, 20, '2024-06-01', 'Pune'),
+    -> (107, 'Rohan', 90000, 10, '2022-09-18', 'Mumbai');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> alter table employee drop email;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| EmpID       | int           | NO   | PRI | NULL    |       |
+| EmpName     | varchar(50)   | NO   |     | NULL    |       |
+| Salary      | decimal(10,2) | YES  |     | NULL    |       |
+| DeptID      | int           | YES  | MUL | NULL    |       |
+| JoiningDate | date          | YES  |     | NULL    |       |
+| City        | varchar(50)   | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO Employee VALUES
+    -> (101, 'Amit', 60000, 10, '2023-01-15', 'Mumbai'),
+    -> (102, 'Sneha', 75000, 20, '2022-05-20', 'Pune'),
+    -> (103, 'Rahul', 50000, 10, '2024-02-10', 'Mumbai'),
+    -> (104, 'Priya', 90000, 30, '2021-08-12', 'Mumbai'),
+    -> (105, 'Karan', 80000, 30, '2023-11-05', 'Nashik'),
+    -> (106, 'Neha', 45000, 20, '2024-06-01', 'Pune'),
+    -> (107, 'Rohan', 90000, 10, '2022-09-18', 'Mumbai');
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Employee
+    -> (EmpID, EmpName, Salary, DeptID, JoiningDate, City)
+    -> VALUES
+    -> (108, 'Anjali', 55000, 10, '2025-01-10', 'Mumbai'),
+    -> (109, 'Vikas', 62000, 20, '2025-02-15', 'Pune'),
+    -> (110, 'Pooja', 48000, 30, '2025-03-20', 'Mumbai'),
+    -> (111, 'Sahil', 70000, 10, '2025-04-25', 'Nashik'),
+    -> (112, 'Meera', 52000, 20, '2025-05-30', 'Pune');
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
++-------+---------+----------+--------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select sum(salary) as toatl_sal from employeee;
+ERROR 1146 (42S02): Table 'ass2.employeee' doesn't exist
+mysql> select sum(salary) as toatl_sal from employee;
++-----------+
+| toatl_sal |
++-----------+
+| 777000.00 |
++-----------+
+1 row in set (0.01 sec)
+
+mysql> select deptid,avg(salary) from employee group by deptid;
++--------+--------------+
+| deptid | avg(salary)  |
++--------+--------------+
+|     10 | 65000.000000 |
+|     20 | 58500.000000 |
+|     30 | 72666.666667 |
++--------+--------------+
+3 rows in set (0.01 sec)
+
+mysql> select deptid , count(*) as total_count from employee group by deptid;
++--------+-------------+
+| deptid | total_count |
++--------+-------------+
+|     10 |           5 |
+|     20 |           4 |
+|     30 |           3 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select deptid , count(*) as total_count from employee group by deptid
+    -> having total_count>5;
+Empty set (0.01 sec)
+
+mysql> select deptid , count(*) as total_count from employee group by deptid
+    -> having total_count>=5;
++--------+-------------+
+| deptid | total_count |
++--------+-------------+
+|     10 |           5 |
++--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select distinct city from employee;
++--------+
+| city   |
++--------+
+| Mumbai |
+| Pune   |
+| Nashik |
++--------+
+3 rows in set (0.01 sec)
+
+mysql> select max(salary) from employee;
++-------------+
+| max(salary) |
++-------------+
+|    90000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(empname) from employee;
++----------------+
+| count(empname) |
++----------------+
+|             12 |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> select * from employee where empname like 'A%';
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+2 rows in set (0.01 sec)
+
+mysql> select * from employee where empname like 'a%';
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where empname like '%n';
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where empname like '%ra%';
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
++-------+---------+----------+--------+-------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee order by salary desc;
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   |
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
++-------+---------+----------+--------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select * from employee order by deptid asc , salary desc;
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik |
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select * from employee where salary between 30000 and 60000;
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
++-------+---------+----------+--------+-------------+--------+
+6 rows in set (0.01 sec)
+
+mysql> select * from employee where salary in(30000,60000);
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where deptid in(10,20,30);
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
++-------+---------+----------+--------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select min(salary) from employee;
++-------------+
+| min(salary) |
++-------------+
+|    45000.00 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select * frrom employee where joiningdate between '2020-01-01' and '2021-12-31';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'frrom employee where joiningdate between '2020-01-01' and '2021-12-31'' at line 1
+mysql> select * from employee where joiningdate between '2020-01-01' and '2021-12-31';
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where salary is null;
+Empty set (0.00 sec)
+
+mysql> select * from employee where salary is not null;
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   |
++-------+---------+----------+--------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select sum(salary) as total_sal from employee group by dept_id having total_sal > 100000;
+ERROR 1054 (42S22): Unknown column 'dept_id' in 'group statement'
+mysql> select sum(salary) as total_sal from employee group by deptid having total_sal > 100000;
++-----------+
+| total_sal |
++-----------+
+| 325000.00 |
+| 234000.00 |
+| 218000.00 |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select deptid,sum(salary) as total_sal from employee group by deptid having total_sal > 100000;
++--------+-----------+
+| deptid | total_sal |
++--------+-----------+
+|     10 | 325000.00 |
+|     20 | 234000.00 |
+|     30 | 218000.00 |
++--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct empname from employee;
++---------+
+| empname |
++---------+
+| Amit    |
+| Sneha   |
+| Rahul   |
+| Priya   |
+| Karan   |
+| Neha    |
+| Rohan   |
+| Anjali  |
+| Vikas   |
+| Pooja   |
+| Sahil   |
+| Meera   |
++---------+
+12 rows in set (0.00 sec)
+
+mysql> select count(*) from department group by city;
+ERROR 1054 (42S22): Unknown column 'city' in 'group statement'
+mysql> select city,count(*) from employee group by city;
++--------+----------+
+| city   | count(*) |
++--------+----------+
+| Mumbai |        6 |
+| Pune   |        4 |
+| Nashik |        2 |
++--------+----------+
+3 rows in set (0.01 sec)
+
+mysql>

@@ -1,0 +1,436 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\chaitanya pingale> mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use ass2;
+Database changed
+mysql> select from department;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from department' at line 1
+mysql>
+mysql> select * from department;
++--------+-----------+
+| DeptID | DeptName  |
++--------+-----------+
+|     10 | IT        |
+|     20 | HR        |
+|     30 | Sales     |
+|     40 | Finance   |
+|     50 | Marketing |
++--------+-----------+
+5 rows in set (0.01 sec)
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   |
++-------+---------+----------+--------+-------------+--------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai |
++-------+---------+----------+--------+-------------+--------+
+7 rows in set (0.01 sec)
+
+mysql> alter table employee add column Email varchar(100);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into employee (empid,empname,salary,deptid,joiningdate,city,email)
+    -> values
+    -> (108,'Anjali',55000,10,'2025-01-10','mumbai'),
+    -> (109,'Vikas',62000,20,2025-02-15,'Pune'),
+    -> (110, 'Pooja', 48000, 30, '2025-03-20', 'Mumbai'),
+    -> (111, 'Sahil', 70000, 10, '2025-04-25', 'Nashik'),
+    -> (112, 'Meera', 52000, 20, '2025-05-30', 'Pune');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into employee (empid,empname,salary,deptid,joiningdate,city)
+    -> values
+    -> (108,'Anjali',55000,10,'2025-01-10','mumbai'),
+    -> (109,'Vikas',62000,20,2025-02-15,'Pune'),
+    -> (110, 'Pooja', 48000, 30, '2025-03-20', 'Mumbai'),
+    -> (111, 'Sahil', 70000, 10, '2025-04-25', 'Nashik'),
+    -> (112, 'Meera', 52000, 20, '2025-05-30', 'Pune');
+ERROR 1292 (22007): Incorrect date value: '2008' for column 'JoiningDate' at row 2
+mysql> insert into employee (empid,empname,salary,deptid,joiningdate,city,email)
+    -> values
+    -> (108,'Anjali',55000,10,'2025-01-10','mumbai'),
+    -> (109,'Vikas',62000,20,'2025-02-15','Pune'),
+    -> (110, 'Pooja', 48000, 30, '2025-03-20', 'Mumbai'),
+    -> (111, 'Sahil', 70000, 10, '2025-04-25', 'Nashik'),
+    -> (112, 'Meera', 52000, 20, '2025-05-30', 'Pune');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO Employee
+    -> (EmpID, EmpName, Salary, DeptID, JoiningDate, City)
+    -> VALUES
+    -> (108, 'Anjali', 55000, 10, '2025-01-10', 'Mumbai'),
+    -> (109, 'Vikas', 62000, 20, '2025-02-15', 'Pune'),
+    -> (110, 'Pooja', 48000, 30, '2025-03-20', 'Mumbai'),
+    -> (111, 'Sahil', 70000, 10, '2025-04-25', 'Nashik'),
+    -> (112, 'Meera', 52000, 20, '2025-05-30', 'Pune');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+12 rows in set (0.00 sec)
+
+mysql> alter table employee set salary=65000 where empid=105;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'set salary=65000 where empid=105' at line 1
+mysql> alter table employee set salary=65000 where empid=5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'set salary=65000 where empid=5' at line 1
+mysql> UPDATE Employee
+    -> SET Salary = 65000
+    -> WHERE EmpID = 5;
+Query OK, 0 rows affected (0.02 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 80000.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+12 rows in set (0.00 sec)
+
+mysql> update employee set salary=55555 where empid=105;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> grant select on sql_ass2 to 'readonly_uswer' @ 'localhost';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''localhost'' at line 1
+mysql> grant select on sql_ass2 to 'readonly_uswer'@'localhost';
+ERROR 1146 (42S02): Table 'ass2.sql_ass2' doesn't exist
+mysql> grant select on ass2.employee to 'readonly_uswer'@'localhost';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> INSERT INTO Employee
+    -> (EmpID, EmpName, Salary, DeptID, JoiningDate, City)
+    -> VALUES
+    -> (113, 'Arjun', 58000, 10, '2025-06-15', 'Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 60000.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   | 58000.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+13 rows in set (0.00 sec)
+
+mysql> start transaction ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee
+    -> set salary=88888
+    -> where empid=101;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 88888.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   | 58000.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+13 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint before_d_update;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee set deptid=20 where empid=101;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 88888.00 |     20 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   | 58000.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+13 rows in set (0.00 sec)
+
+mysql> rollback to savepoint before_d_update;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 88888.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   | 50000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   | 58000.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+13 rows in set (0.00 sec)
+
+mysql> select * from employee where salary>50000;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    | 88888.00 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   107 | Rohan   | 90000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  | 55000.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   111 | Sahil   | 70000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   | 58000.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+10 rows in set (0.01 sec)
+
+mysql> update employee set salary=salary*0.10
+    -> where deptid=10;
+Query OK, 6 rows affected (0.02 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   101 | Amit    |  8888.80 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   103 | Rahul   |  5000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   107 | Rohan   |  9000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   108 | Anjali  |  5500.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   |  7000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   |  5800.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+13 rows in set (0.00 sec)
+
+mysql> select deptid,count(*) as tottalemp
+    -> from employee
+    -> group by deptid;
++--------+-----------+
+| deptid | tottalemp |
++--------+-----------+
+|     10 |         6 |
+|     20 |         4 |
+|     30 |         3 |
++--------+-----------+
+3 rows in set (0.02 sec)
+
+mysql> select max(salary) as high from employee;
++----------+
+| high     |
++----------+
+| 90000.00 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select max(salary)
+    -> from employee
+    -> where salary < (select max(salary) from employee);
++-------------+
+| max(salary) |
++-------------+
+|    75000.00 |
++-------------+
+1 row in set (0.04 sec)
+
+mysql> select * from employee order by joiningdate;
++-------+---------+----------+--------+-------------+--------+-------+
+| EmpID | EmpName | Salary   | DeptID | JoiningDate | City   | Email |
++-------+---------+----------+--------+-------------+--------+-------+
+|   104 | Priya   | 90000.00 |     30 | 2021-08-12  | Mumbai | NULL  |
+|   102 | Sneha   | 75000.00 |     20 | 2022-05-20  | Pune   | NULL  |
+|   107 | Rohan   |  9000.00 |     10 | 2022-09-18  | Mumbai | NULL  |
+|   101 | Amit    |  8888.80 |     10 | 2023-01-15  | Mumbai | NULL  |
+|   105 | Karan   | 55555.00 |     30 | 2023-11-05  | Nashik | NULL  |
+|   103 | Rahul   |  5000.00 |     10 | 2024-02-10  | Mumbai | NULL  |
+|   106 | Neha    | 45000.00 |     20 | 2024-06-01  | Pune   | NULL  |
+|   108 | Anjali  |  5500.00 |     10 | 2025-01-10  | Mumbai | NULL  |
+|   109 | Vikas   | 62000.00 |     20 | 2025-02-15  | Pune   | NULL  |
+|   110 | Pooja   | 48000.00 |     30 | 2025-03-20  | Mumbai | NULL  |
+|   111 | Sahil   |  7000.00 |     10 | 2025-04-25  | Nashik | NULL  |
+|   112 | Meera   | 52000.00 |     20 | 2025-05-30  | Pune   | NULL  |
+|   113 | Arjun   |  5800.00 |     10 | 2025-06-15  | Mumbai | NULL  |
++-------+---------+----------+--------+-------------+--------+-------+
+13 rows in set (0.01 sec)
+
+mysql> alter table employee change column deptname departmentname varchar(50) nonnull;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nonnull' at line 1
+mysql> alter table employee change column deptname departmentname varchar(50) not null;
+ERROR 1054 (42S22): Unknown column 'deptname' in 'employee'
+mysql> alter table department change column deptname departmentname varchar(50) not null;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++--------+----------------+
+| DeptID | departmentname |
++--------+----------------+
+|     10 | IT             |
+|     20 | HR             |
+|     30 | Sales          |
+|     40 | Finance        |
+|     50 | Marketing      |
++--------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> truncate employee;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc employee;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| EmpID       | int           | NO   | PRI | NULL    |       |
+| EmpName     | varchar(50)   | NO   |     | NULL    |       |
+| Salary      | decimal(10,2) | YES  |     | NULL    |       |
+| DeptID      | int           | YES  | MUL | NULL    |       |
+| JoiningDate | date          | YES  |     | NULL    |       |
+| City        | varchar(50)   | YES  |     | NULL    |       |
+| Email       | varchar(100)  | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+7 rows in set (0.04 sec)
+
+mysql> select * from employee;
+Empty set (0.00 sec)
+
+mysql> drop employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> delete from employee;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc employee;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| EmpID       | int           | NO   | PRI | NULL    |       |
+| EmpName     | varchar(50)   | NO   |     | NULL    |       |
+| Salary      | decimal(10,2) | YES  |     | NULL    |       |
+| DeptID      | int           | YES  | MUL | NULL    |       |
+| JoiningDate | date          | YES  |     | NULL    |       |
+| City        | varchar(50)   | YES  |     | NULL    |       |
+| Email       | varchar(100)  | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee;
+Empty set (0.00 sec)
+
+mysql>

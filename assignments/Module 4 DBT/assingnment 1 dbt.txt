@@ -1,0 +1,258 @@
+mysql> create database lib_managment;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cmp                |
+| college            |
+| gym_management     |
+| information_schema |
+| lib_managment      |
+| linkedin           |
+| linkedins          |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use lib_managment;
+Database changed
+mysql> create table authors(author_id int primary key,name varchar(50),country varchar(50));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table books(book_id int primary key,title varchar(50),author_id int,published_year year,avilable_copies int,foreign key (author_id) refrence authors(author_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refrence authors(author_id))' at line 1
+mysql> create table books(book_id int primary key,title varchar(50),author_id int,published_year year,avilable_copies int,foreign key (author_id) refrences authors(author_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refrences authors(author_id))' at line 1
+mysql> create table books(book_id int primary key,title varchar(50),author_id int,published_year year,avilable_copies int,foreign key (author_id) references authors(author_id));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table members(member_id int primary key,name varchar(100),email varchar(100) unique,phone varchar(15));
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> create borrow_record (record_id int primary key,member_id int,book_id int,borrow_date date,return_date date);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'borrow_record (record_id int primary key,member_id int,book_id int,borrow_date d' at line 1
+mysql> create table borrow_record (record_id int primary key,member_id int,book_id int,borrow_date date,return_date date,foreign key (member_id) references members(member_id),foreign key (book_id) references books(book_id));
+Query OK, 0 rows affected (0.05 sec)
+
+Q6:-
+mysql> alter table books add column genre varchar (50);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+Q7:-
+mysql> drop table borrow_records;
+ERROR 1051 (42S02): Unknown table 'lib_managment.borrow_records'
+mysql> drop table borrow_record;
+Query OK, 0 rows affected (0.03 sec)
+
+Q8:-
+
+mysql> insert into authors (author_id,name,country) values (1,'r.k.narayan','india');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into authors (author_id,name,country) values (2,'suresh dhas','india'),(3,'robert','usa');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from authors;
++-----------+-------------+---------+
+| author_id | name        | country |
++-----------+-------------+---------+
+|         1 | r.k.narayan | india   |
+|         2 | suresh dhas | india   |
+|         3 | robert      | usa     |
++-----------+-------------+---------+
+3 rows in set (0.00 sec)
+
+
+Q9:-
+
+
+mysql> INSERT INTO Books
+    -> (book_id, title, author_id, published_year, available_copies, genre)
+    -> VALUES
+    -> (1, 'Database Systems', 3, 2018, 5, 'Technology'),
+    -> (2, 'Clean Code', 2, 2008, 3, 'Technology'),
+    -> (3, 'The Guide', 1, 1958, 4, 'Fiction'),
+    -> (4, 'Operating Systems', 3, 2020, 6, 'Technology'),
+    -> (5, 'Modern Database Design', 3, 2022, 2, 'Technology');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from books;
++---------+------------------------+-----------+----------------+------------------+------------+
+| book_id | title                  | author_id | published_year | available_copies | genre      |
++---------+------------------------+-----------+----------------+------------------+------------+
+|       1 | Database Systems       |         3 |           2018 |                5 | Technology |
+|       2 | Clean Code             |         2 |           2008 |                3 | Technology |
+|       3 | The Guide              |         1 |           1958 |                4 | Fiction    |
+|       4 | Operating Systems      |         3 |           2020 |                6 | Technology |
+|       5 | Modern Database Design |         3 |           2022 |                2 | Technology |
++---------+------------------------+-----------+----------------+------------------+------------+
+5 rows in set (0.04 sec)
+
+q10 :-
+
+mysql> INSERT INTO Members (member_id, name, email, phone)
+    -> VALUES
+    -> (1, 'Amit Sharma', 'amit@gmail.com', '9876543210'),
+    -> (2, 'Priya Patil', 'priya@gmail.com', '9876543211'),
+    -> (3, 'Rahul Verma', 'rahul@gmail.com', '9876543212');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from members;
++-----------+-------------+-----------------+------------+
+| member_id | name        | email           | phone      |
++-----------+-------------+-----------------+------------+
+|         1 | Amit Sharma | amit@gmail.com  | 9876543210 |
+|         2 | Priya Patil | priya@gmail.com | 9876543211 |
+|         3 | Rahul Verma | rahul@gmail.com | 9876543212 |
++-----------+-------------+-----------------+------------+
+3 rows in set (0.00 sec)
+
+Q 11:-
+
+exist
+mysql> INSERT INTO borrow_record
+    -> VALUES
+    -> (1, 1, 1, '2026-10-01', NULL),
+    -> (2, 2, 2, '2026-10-02', '2026-10-05'),
+    -> (3, 3, 1, '2026-10-03', NULL),
+    -> (4, 1, 4, '2026-10-04', NULL);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from borrow_record;
++-----------+-----------+---------+-------------+-------------+
+| record_id | member_id | book_id | borrow_date | return_date |
++-----------+-----------+---------+-------------+-------------+
+|         1 |         1 |       1 | 2026-10-01  | NULL        |
+|         2 |         2 |       2 | 2026-10-02  | 2026-10-05  |
+|         3 |         3 |       1 | 2026-10-03  | NULL        |
+|         4 |         1 |       4 | 2026-10-04  | NULL        |
++-----------+-----------+---------+-------------+-------------+
+4 rows in set (0.00 sec)
+
+
+Q12:-
+
+mysql> select * from books where publish_year>2015;
+ERROR 1054 (42S22): Unknown column 'publish_year' in 'where clause'
+mysql> select * from books where published_year>2015;
++---------+------------------------+-----------+----------------+------------------+------------+
+| book_id | title                  | author_id | published_year | available_copies | genre      |
++---------+------------------------+-----------+----------------+------------------+------------+
+|       1 | Database Systems       |         3 |           2018 |                5 | Technology |
+|       4 | Operating Systems      |         3 |           2020 |                6 | Technology |
+|       5 | Modern Database Design |         3 |           2022 |                2 | Technology |
++---------+------------------------+-----------+----------------+------------------+------------+
+3 rows in set (0.00 sec)
+
+
+Q13 :-
+
+Q14:-
+
+Q15:-
+mysql> UPDATE Books
+    -> SET available_copies = available_copies - 1
+    -> WHERE book_id = 1
+    ->   AND available_copies > 0;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from books;
++---------+------------------------+-----------+----------------+------------------+------------+
+| book_id | title                  | author_id | published_year | available_copies | genre      |
++---------+------------------------+-----------+----------------+------------------+------------+
+|       1 | Database Systems       |         3 |           2018 |                4 | Technology |
+|       2 | Clean Code             |         2 |           2008 |                3 | Technology |
+|       3 | The Guide              |         1 |           1958 |                4 | Fiction    |
+|       4 | Operating Systems      |         3 |           2020 |                6 | Technology |
+|       5 | Modern Database Design |         3 |           2022 |                2 | Technology |
++---------+------------------------+-----------+----------------+------------------+------------+
+5 rows in set (0.00 sec)
+
+Q16:-
+
+mysql> delete from borrow_record where member_id=3;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from borrow_record;
++-----------+-----------+---------+-------------+-------------+
+| record_id | member_id | book_id | borrow_date | return_date |
++-----------+-----------+---------+-------------+-------------+
+|         1 |         1 |       1 | 2026-10-01  | NULL        |
+|         2 |         2 |       2 | 2026-10-02  | 2026-10-05  |
+|         4 |         1 |       4 | 2026-10-04  | NULL        |
++-----------+-----------+---------+-------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM Members
+    ->
+    -> where member_id=3;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from members;
++-----------+-------------+-----------------+------------+
+| member_id | name        | email           | phone      |
++-----------+-------------+-----------------+------------+
+|         1 | Amit Sharma | amit@gmail.com  | 9876543210 |
+|         2 | Priya Patil | priya@gmail.com | 9876543211 |
++-----------+-------------
+
+
+Q17:-
+
+mysql> update books set title='adt' where book_id=1;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from books;
++---------+------------------------+-----------+----------------+------------------+------------+
+| book_id | title                  | author_id | published_year | available_copies | genre      |
++---------+------------------------+-----------+----------------+------------------+------------+
+|       1 | adt                    |         3 |           2018 |                4 | Technology |
+|       2 | Clean Code             |         2 |           2008 |                3 | Technology |
+|       3 | The Guide              |         1 |           1958 |                4 | Fiction    |
+|       4 | Operating Systems      |         3 |           2020 |                6 | Technology |
+|       5 | Modern Database Design |         3 |           2022 |                2 | Technology |
++---------+------------------------+-----------+----------------+------------------+------------+
+5 rows in set (0.00 sec)
+
+
+Q18:-
+
+Q19:-
+
+mysql> DELETE FROM Books
+    -> WHERE published_year < 2000;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from books;
++---------+------------------------+-----------+----------------+------------------+------------+
+| book_id | title                  | author_id | published_year | available_copies | genre      |
++---------+------------------------+-----------+----------------+------------------+------------+
+|       1 | adt                    |         3 |           2018 |                4 | Technology |
+|       2 | Clean Code             |         2 |           2008 |                3 | Technology |
+|       4 | Operating Systems      |         3 |           2020 |                6 | Technology |
+|       5 | Modern Database Design |         3 |           2022 |                2 | Technology |
++---------+------------------------+-----------+----------------+------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+Q20:-
+
+
+
+
+
+
+
