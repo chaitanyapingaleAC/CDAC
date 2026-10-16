@@ -1,0 +1,410 @@
+
+C:\Users\chaitanya pingale>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database ass5;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use ass5;
+Database changed
+
+Q1:-------------------------------------------------------------
+
+mysql> delimiter //
+mysql> create procedure check_even_odd(in num int)
+    -> begin
+    -> if num%2=0 then
+    -> select 'even number' as messege;
+    -> else
+    -> select 'odd number' as messege;
+    -> end if;
+    -> end //
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> delimiter ;
+mysql> call check_even_odd(2);
++-------------+
+| messege     |
++-------------+
+| even number |
++-------------+
+1 row in set (0.05 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> call check_even_odd(3);
++------------+
+| messege    |
++------------+
+| odd number |
++------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+===============================================================================================
+Q2:
+
+
+mysql> delimiter //
+mysql> create procedure calculate_intrest(in principal int,in rate int,in time int)
+    -> begin
+    -> declare result int;
+    -> set result=
+    -> (principal*time*rate)/100;
+    -> select result as msg;
+    -> end //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> call calculate_intrest(10000,5,2);
++------+
+| msg  |
++------+
+| 1000 |
++------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> call calculate_intrest(25000,7,3);
++------+
+| msg  |
++------+
+| 5250 |
++------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+=============================================================================================================
+Q3
+
+mysql> delimiter //
+mysql> create procedure calculate_grade(in id int,in name varchar(50),in marks int)
+    -> begin
+    -> declare grade varchar(10);
+    -> if marks<0 then
+    -> select 'invalid marks' as messege;
+    -> elseif marks>=90 then
+    -> set grade='A+';
+    -> elseif marks>=80 then
+    -> set grade='A';
+    -> elseif marks>=70 then
+    -> set grade='B';
+    -> elseif marks>=60 then
+    -> set grade='C';
+    -> elseif marks>=50 then
+    -> set grade='D';
+    -> else
+    -> set grade='F';
+    -> end if;
+    -> select id,name,marks,grade;
+    -> end //
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> delimiter ;
+mysql> call calculate_grade(101,'Amit',85);
++------+------+-------+-------+
+| id   | name | marks | grade |
++------+------+-------+-------+
+|  101 | Amit |    85 | A     |
++------+------+-------+-------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> call calculate_grade(102,'Priya',72);
++------+-------+-------+-------+
+| id   | name  | marks | grade |
++------+-------+-------+-------+
+|  102 | Priya |    72 | B     |
++------+-------+-------+-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call calculate_grade(103,'rahul',45);
++------+-------+-------+-------+
+| id   | name  | marks | grade |
++------+-------+-------+-------+
+|  103 | rahul |    45 | F     |
++------+-------+-------+-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+=============================================================================================================
+Q4:
+
+
+mysql> delimiter //
+mysql> create procedure calculate_bonus(in name varchar(50),in salary int)
+    -> begin
+    -> declare bonuspercentage int;
+    -> declare bonusamount decimal(10,2);
+    -> declare totalamount decimal(10,2);
+    -> if salary>=100000 then
+    -> set bonuspercentage=20 ;
+    -> set bonusamount=salary * 0.2;
+    -> elseif salary>=50000 then
+    -> set bonuspercentage=15;
+    -> set bonusamount=salary * 0.15;
+    -> elseif salary>=30000 then
+    -> set bonuspercentage=10 ;
+    ->  set bonusamount=salary * 0.1;
+    -> else
+    -> set bonuspercentage=5;
+    ->  set bonusamount=salary * 0.05;
+    -> end if;
+    -> set totalamount=salary + bonusamount;
+    -> SELECT name, salary, bonuspercentage, bonusamount, totalamount;
+    -> end //
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> delimiter ;
+mysql> CALL calculate_bonus('Amit', 120000);
++------+--------+-----------------+-------------+-------------+
+| name | salary | bonuspercentage | bonusamount | totalamount |
++------+--------+-----------------+-------------+-------------+
+| Amit | 120000 |              20 |    24000.00 |   144000.00 |
++------+--------+-----------------+-------------+-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CALL calculate_bonus('Priya', 65000);
++-------+--------+-----------------+-------------+-------------+
+| name  | salary | bonuspercentage | bonusamount | totalamount |
++-------+--------+-----------------+-------------+-------------+
+| Priya |  65000 |              15 |     9750.00 |    74750.00 |
++-------+--------+-----------------+-------------+-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL calculate_bonus('Rahul', 25000);
++-------+--------+-----------------+-------------+-------------+
+| name  | salary | bonuspercentage | bonusamount | totalamount |
++-------+--------+-----------------+-------------+-------------+
+| Rahul |  25000 |               5 |     1250.00 |    26250.00 |
++-------+--------+-----------------+-------------+-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+=====================================================================================
+Q5
+
+
+mysql> delimiter //
+mysql> create procedure find_maximum(in num1 int,in num2 int,in num3 int)
+    -> begin
+    -> if num1>num2 then
+    -> if num1>num3 then
+    -> select num1 as greater;
+    -> else
+    -> select num3 as graeter;
+    -> end if;
+    -> else
+    ->
+    -> if num2>num3 then
+    -> select num2 as greater;
+    -> else
+    -> select num3 as greater;
+    -> end if;
+    -> end if;
+    -> end //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> CALL find_maximum(25, 78, 45);
++---------+
+| greater |
++---------+
+|      78 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL find_maximum(100, 50, 75);
++---------+
+| greater |
++---------+
+|     100 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL find_maximum(30, 30, 20);
++---------+
+| greater |
++---------+
+|      30 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+===============================================================================================================
+Q6
+
+
+mysql>
+mysql> DELIMITER //
+mysql>
+mysql> CREATE PROCEDURE salary_analysis(
+    ->     IN name VARCHAR(50),
+    ->     IN salary INT
+    -> )
+    -> BEGIN
+    ->     DECLARE catagory VARCHAR(20);
+    ->     DECLARE allowancepercentage INT;
+    ->     DECLARE allowance DECIMAL(10,2);
+    ->     DECLARE final_amount DECIMAL(12,2);
+    ->
+    ->     IF salary >= 100000 THEN
+    ->         SET catagory = 'High';
+    ->         SET allowancepercentage = 20;
+    ->
+    ->     ELSEIF salary >= 50000 THEN
+    ->         SET catagory = 'Medium';
+    ->         SET allowancepercentage = 15;
+    ->
+    ->     ELSE
+    ->         SET catagory = 'Low';
+    ->         SET allowancepercentage = 10;
+    ->     END IF;
+    ->
+    ->     SET allowance = salary * allowancepercentage / 100;
+    ->     SET final_amount = allowance + salary;
+    ->
+    ->     SELECT name, salary, catagory,
+    ->            allowancepercentage AS allowance_percentage,
+    ->            allowance, final_amount;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> CALL salary_analysis('Amit', 120000);
++------+--------+----------+----------------------+-----------+--------------+
+| name | salary | catagory | allowance_percentage | allowance | final_amount |
++------+--------+----------+----------------------+-----------+--------------+
+| Amit | 120000 | High     |                   20 |  24000.00 |    144000.00 |
++------+--------+----------+----------------------+-----------+--------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CALL salary_analysis('Priya', 60000);
++-------+--------+----------+----------------------+-----------+--------------+
+| name  | salary | catagory | allowance_percentage | allowance | final_amount |
++-------+--------+----------+----------------------+-----------+--------------+
+| Priya |  60000 | Medium   |                   15 |   9000.00 |     69000.00 |
++-------+--------+----------+----------------------+-----------+--------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL salary_analysis('Rahul', 35000);
++-------+--------+----------+----------------------+-----------+--------------+
+| name  | salary | catagory | allowance_percentage | allowance | final_amount |
++-------+--------+----------+----------------------+-----------+--------------+
+| Rahul |  35000 | Low      |                   10 |   3500.00 |     38500.00 |
++-------+--------+----------+----------------------+-----------+--------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+==================================================================================================
+Q7:
+
+
+
+
+mysql> delimiter //
+mysql> create procedure calculate_electricity_bill(in name varchar(50),in unit int)
+    -> begin
+    -> declare total_bill decimal(10,2);
+    -> if unit<100 then
+    -> set total_bill=unit * 2;
+    -> elseif unit<200 then
+    -> set total_bill=unit * 3;
+    -> elseif unit<300 then
+    -> set total_bill=unit * 5;
+    -> else
+    -> set total_bill= unit * 7;
+    -> end if;
+    -> select name,unit,concat('your bill is : ',total_bill) as total_billl;
+    -> end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> CALL calculate_electricity_bill('Amit', 80);
++------+------+-----------------------+
+| name | unit | total_billl           |
++------+------+-----------------------+
+| Amit |   80 | your bill is : 160.00 |
++------+------+-----------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL calculate_electricity_bill('Priya', 150);
++-------+------+-----------------------+
+| name  | unit | total_billl           |
++-------+------+-----------------------+
+| Priya |  150 | your bill is : 450.00 |
++-------+------+-----------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL calculate_electricity_bill('Rahul', 350);
++-------+------+------------------------+
+| name  | unit | total_billl            |
++-------+------+------------------------+
+| Rahul |  350 | your bill is : 2450.00 |
++-------+------+------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL calculate_electricity_bill('Sneha', 500);
++-------+------+------------------------+
+| name  | unit | total_billl            |
++-------+------+------------------------+
+| Sneha |  500 | your bill is : 3500.00 |
++-------+------+------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+
